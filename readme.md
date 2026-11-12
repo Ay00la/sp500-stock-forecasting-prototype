@@ -47,7 +47,7 @@ At 1x, a single Parquet file is the simplest and fastest option, so the notebook
 
 ### Why Polars instead of pandas
 
-Both libraries can do everything this assignment needs, and at the current 1x size either would finish quickly. The deciding factor is what happens at 10x and 100x.
+Both libraries can do everything this project needs, and at the current 1x size either would finish quickly. The deciding factor is what happens at 10x and 100x.
 
 - **Lazy execution.** Polars can plan a whole query before running it, reading only the columns and rows it needs. Pandas runs each step immediately and keeps every intermediate result.
 - **Parallelism.** Polars uses all CPU cores by default. Pandas operations are mostly single-threaded.
@@ -99,9 +99,9 @@ This stage covers the analysis and modelling requirements, and it is built up in
 
 **Preparing the data.** The Parquet file is loaded and filtered to rows that have a closing price and volume. Rows are then sorted by company and date, so every calculation that follows runs in time order.
 
-**Adding the indicators.** Four technical indicators are added to the dataframe: SMA 20, EMA 20, RSI 14 and MACD with its signal line. That is double the two the assignment asks for. Each one is calculated separately for every company, so values never leak from one stock into another. Short returns and relative volume are added as supporting features, and the indicators are rescaled so that one model can learn from all 505 companies together.
+**Adding the indicators.** Four technical indicators are added to the dataframe: SMA 20, EMA 20, RSI 14 and MACD with its signal line. That is double the two the project asks for. Each one is calculated separately for every company, so values never leak from one stock into another. Short returns and relative volume are added as supporting features, and the indicators are rescaled so that one model can learn from all 505 companies together.
 
-**Framing the prediction problem.** The target is the next day's percentage change in the closing price. The first rows of each company, where the rolling windows are not yet full, are dropped. The final row of each company is set aside because it has no tomorrow yet, and it is used later for the true forecast. The data is then split 80/20 by date, with the earlier 80% used for training and the latest 20% for back-testing, as the assignment requires.
+**Framing the prediction problem.** The target is the next day's percentage change in the closing price. The first rows of each company, where the rolling windows are not yet full, are dropped. The final row of each company is set aside because it has no tomorrow yet, and it is used later for the true forecast. The data is then split 80/20 by date, with the earlier 80% used for training and the latest 20% for back-testing, as the project requires.
 
 **Training and back-testing the models.** Ridge regression and gradient boosting are trained on the same features. Their predicted changes are converted back into prices and scored against the real next-day closes using RMSE, MAE and MAPE, next to a naive baseline. Finally, the notebook produces a next-day forecast for every company and saves the indicators, back-test predictions and forecasts as small Parquet files in `data/parquet/`.
 
