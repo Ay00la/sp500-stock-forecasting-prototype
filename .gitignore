@@ -1,0 +1,4 @@
+data/parquet/
+.ipynb_checkpoints/
+__pycache__/
+.venv/
