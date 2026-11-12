@@ -1,4 +1,4 @@
-# Summary of technology choices for the S&P 500 stock price prototype
+# S&P 500 STOCK FORECASTING PROTOTYPE: TECHNOLOGY CHOICES AND WORKFLOW
 
 ![Technical architecture of the stock price prototype](docs/architecture.png)
 
