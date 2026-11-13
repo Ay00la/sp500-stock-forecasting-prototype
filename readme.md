@@ -109,6 +109,18 @@ This stage covers the analysis and modelling requirements, and it is built up in
 
 This stage satisfies the requirement that predictions be available for every company. The dashboard reads the files saved in Part 2, so it never has to retrain anything. Choosing or typing a ticker in the dropdown updates three charts: actual against predicted prices over the test period with tomorrow's forecast marked, the closing price with its moving averages, and the RSI. A short line above the charts gives the last close, both forecasts and each model's test error for that company. Because every update reads only the selected company's rows, covering all 505 tickers does not slow it down.
 
+### Environment and libraries
+
+The project was built and run using **Anaconda Jupyter Notebook**. The libraries below are used in notebook:
+
+- **polars:** loads the data, calculates the indicators and prepares the model inputs.
+- **pyarrow:** lets Polars read and write Parquet files.
+- **scikit-learn:** provides the two prediction models, Ridge regression and gradient boosting.
+- **plotly:** draws the interactive charts.
+- **dash:** turns those charts into a searchable dashboard.
+- **jupyter:** runs the notebook.
+- **numpy:** handles the numeric arrays and error metrics. It installs automatically with scikit-learn.
+
 ## Running the notebook
 
 Place `all_stocks_5yr.csv` in `data/csv/` inside the working directory and run the cells from top to bottom. The first cell installs `polars`, `pyarrow`, `scikit-learn`, `plotly` and `dash` if they are missing. The notebook only writes to `data/parquet/`, where it saves four Parquet files: the converted dataset, the indicator data, the back-test predictions and the next-day forecasts. The dashboard reads the last three, so it can be relaunched without retraining the models.
